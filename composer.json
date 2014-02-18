@@ -1,0 +1,12 @@
+{
+    "name": "jwage/stomper",
+    "description": "PHP Stomp Library",
+    "license": "MIT",
+    "type": "project",
+    "autoload": {
+        "psr-0": { "JWage": "src/" }
+    },
+    "require": {
+        "fusesource/stomp-php" : "~2.1"
+    }
+}
