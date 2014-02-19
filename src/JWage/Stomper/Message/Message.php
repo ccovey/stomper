@@ -5,6 +5,11 @@ namespace JWage\Stomper\Message;
 class Message implements MessageInterface
 {
     /**
+     * @var StompFrame|FuseSource\Stomp\Frame
+     */
+    protected $frame;
+
+    /**
      * @var string
      */
     protected $queueName;
@@ -35,6 +40,26 @@ class Message implements MessageInterface
         $this->queueName = $queueName;
         $this->parameters = $parameters;
         $this->headers = $headers;
+    }
+
+    /**
+     * Sets the raw Frame object for this message.
+     *
+     * @param StompFrame|FuseSource\Stomp\Frame $frame
+     */
+    public function setFrame($frame)
+    {
+        $this->frame = $frame;
+    }
+
+    /**
+     * Gets the raw Frame object for this message.
+     *
+     * @return StompFrame|FuseSource\Stomp\Frame $frame
+     */
+    public function getFrame()
+    {
+        return $this->frame;
     }
 
     /**
