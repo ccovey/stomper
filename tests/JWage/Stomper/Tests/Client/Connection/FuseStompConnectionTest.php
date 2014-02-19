@@ -7,14 +7,32 @@ use PHPUnit_Framework_TestCase;
 
 class FuseStompConnectionTest extends PHPUnit_Framework_TestCase
 {
-    public function testConstruct()
+    private $stomp;
+    private $connection;
+
+    protected function setUp()
     {
-        $stomp = $this->getMockBuilder('FuseSource\Stomp\Stomp')
+        $this->stomp = $this->getMockBuilder('FuseSource\Stomp\Stomp')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $connection = new FuseStompConnection($stomp, 'guest', 'guest');
+        $this->connection = new FuseStompConnection($this->stomp, 'guest', 'guest');
+    }
 
-        $this->assertSame($stomp, $connection->getWrappedStompConnection());
+    public function testConstruct()
+    {
+        $this->assertSame($this->stomp, $this->connection->getWrappedStompConnection());
+    }
+
+    public function testHasFrame()
+    {
+        $this->stomp->expects($this->once())
+            ->method('connect');
+
+        $this->stomp->expects($this->once())
+            ->method('hasFrameToRead')
+            ->will($this->returnValue(true));
+
+       $this->assertTrue($this->connection->hasFrame());
     }
 }
