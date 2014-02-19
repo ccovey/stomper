@@ -44,7 +44,7 @@ abstract class AbstractStompClient implements ClientInterface
         );
     }
 
-    private function jsonEncode($data)
+    protected function jsonEncode($data)
     {
         $jsonEncoded = @json_encode($data);
 
