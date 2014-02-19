@@ -19,4 +19,15 @@ class FuseStompConnection extends AbstractConnection
         $this->username = $username;
         $this->password = $password;
     }
+
+    /**
+     * Indicates whether or not there is a frame ready to read.
+     *
+     * @return boolean
+     */
+    public function hasFrame()
+    {
+        $this->connect();
+        return $this->stomp->hasFrameToRead();
+    }
 }

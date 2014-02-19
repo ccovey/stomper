@@ -2,6 +2,7 @@
 
 namespace JWage\Stomper\Tests\Message;
 
+use FuseSource\Stomp\Frame;
 use JWage\Stomper\Message\Message;
 use PHPUnit_Framework_TestCase;
 
@@ -13,6 +14,18 @@ class MessageTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('queue.name', $message->getQueueName());
         $this->assertEquals(array('key' => 'value'), $message->getParameters());
         $this->assertEquals(array('header' => 'value'), $message->getHeaders());
+    }
+
+    public function testSetGetFrame()
+    {
+        $message = new Message();
+
+        $this->assertNull($message->getFrame());
+
+        $frame = new Frame();
+        $message->setFrame($frame);
+
+        $this->assertSame($frame, $message->getFrame());
     }
 
     public function testQueueName()

@@ -5,7 +5,14 @@ namespace JWage\Stomper\Message;
 interface MessageInterface
 {
     /**
-     * Get the queue name for this message.
+     * Gets the raw Frame object for this message.
+     *
+     * @return StompFrame|FuseSource\Stomp\Frame $frame
+     */
+    public function getFrame();
+
+    /**
+     * Gets the queue name for this message.
      *
      * @return string $queueName
      */
