@@ -8,6 +8,34 @@ use JWage\Stomper\Message\MessageInterface;
 interface ClientInterface
 {
     /**
+     * Checks whether or not we have connected to stomp.
+     *
+     * @return boolean
+     */
+    public function isConnected();
+
+    /**
+     * Connects with stomp.
+     *
+     * @return boolean
+     */
+    public function connect();
+
+    /**
+     * Disconnects from stomp.
+     *
+     * @return boolean
+     */
+    public function disconnect();
+
+    /**
+     * Gets the current stomp connection session id.
+     *
+     * @return string
+     */
+    public function getSessionId();
+
+    /**
      * Sends a Message instance.
      *
      * @param MessageInterface $message

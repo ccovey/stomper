@@ -27,6 +27,42 @@ class AbstractStompClientTest extends PHPUnit_Framework_TestCase
         $this->assertSame($this->connection, $this->client->getConnection());
     }
 
+    public function testIsConnected()
+    {
+        $this->connection->expects($this->once())
+            ->method('isConnected')
+            ->will($this->returnValue(true));
+
+        $this->assertTrue($this->client->isConnected());
+    }
+
+    public function testConnect()
+    {
+        $this->connection->expects($this->once())
+            ->method('connect')
+            ->will($this->returnValue(true));
+
+        $this->assertTrue($this->client->connect());
+    }
+
+    public function testDisconnect()
+    {
+        $this->connection->expects($this->once())
+            ->method('disconnect')
+            ->will($this->returnValue(true));
+
+        $this->assertTrue($this->client->disconnect());
+    }
+
+    public function testGetSessionId()
+    {
+        $this->connection->expects($this->once())
+            ->method('getSessionId')
+            ->will($this->returnValue('sessionId'));
+
+        $this->assertEquals('sessionId', $this->client->getSessionId());
+    }
+
     public function testSend()
     {
         $message = new Message();

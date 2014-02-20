@@ -31,4 +31,37 @@ class FunctionalTest extends PHPUnit_Framework_TestCase
 
         $fuseStompClient->send($message);
     }
+
+    public function testFunctionalHornetQ()
+    {
+        $host = 'tcp://127.0.0.1:61613';
+        $consumer = new FuseStompClient(new FuseStompConnection(new \FuseSource\Stomp\Stomp($host), 'guest', 'guest'));
+
+        try {
+            $consumer->connect();
+        } catch (\FuseSource\Stomp\Exception\StompException $e) {
+            $this->markTestSkipped(sprintf(sprintf('Could not connect to HornetQ at %s', $host)));
+        }
+
+        $publisher = new FuseStompClient(new FuseStompConnection(new \FuseSource\Stomp\Stomp($host), 'guest', 'guest'));
+
+        $messageFactory = new MessageFactory();
+
+        $message = $messageFactory->createMessage();
+        $message->setQueueName('jms.queue.testing');
+        $message->setParameters(array('param' => 'value'));
+        $message->setHeaders(array('header' => 'value'));
+
+        $publisher->send($message);
+
+        $consumer->subscribe('jms.queue.testing');
+
+        $receivedMessage = $consumer->readMessage();
+        $receivedHeaders = $receivedMessage->getHeaders();
+
+        $this->assertInstanceOf('JWage\Stomper\Message\Message', $receivedMessage);
+        $this->assertEquals($message->getParameters(), $receivedMessage->getParameters());
+        $this->assertTrue(isset($receivedHeaders['header']));
+        $this->assertEquals('value', $receivedHeaders['header']);
+    }
 }

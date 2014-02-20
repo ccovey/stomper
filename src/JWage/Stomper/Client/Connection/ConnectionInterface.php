@@ -116,7 +116,7 @@ interface ConnectionInterface
     /**
      * Reads the next frame.
      *
-     * @return StompFrame|FuseSource\Stomp\Frame
+     * @return \JWage\Stomper\Client\Connection\Frame\FrameInterface
      */
     public function readFrame();
 

@@ -3,6 +3,7 @@
 namespace JWage\Stomper\Client\Connection;
 
 use FuseSource\Stomp\Stomp as BaseStomp;
+use JWage\Stomper\Client\Connection\Frame\FrameFactory;
 
 abstract class AbstractConnection implements ConnectionInterface
 {
@@ -10,9 +11,40 @@ abstract class AbstractConnection implements ConnectionInterface
      * @var object
      */
     protected $stomp;
+
+    /**
+     * @var string
+     */
     protected $username;
+
+    /**
+     * @var string
+     */
     protected $password;
+
+    /**
+     * @var FrameFactory
+     */
+    protected $frameFactory;
+
+    /**
+     * @var boolean
+     */
     protected $connected = false;
+
+    /**
+     * Constructs a connection instance.
+     *
+     * @param string $username
+     * @param string $password
+     * @param FrameFactory $frameFactory
+     */
+    public function __construct($username, $password, FrameFactory $frameFactory = null)
+    {
+        $this->username = $username;
+        $this->password = $password;
+        $this->frameFactory = $frameFactory ?: $this->createDefaultFrameFactory();
+    }
 
     /**
      * Indicates whether or not there is a frame ready to read.
@@ -189,11 +221,20 @@ abstract class AbstractConnection implements ConnectionInterface
     /**
      * Reads the next frame.
      *
-     * @return StompFrame|FuseSource\Stomp\Frame
+     * @return \JWage\Stomper\Client\Connection\Frame\FrameInterface
      */
     public function readFrame()
     {
         $this->connect();
-        return $this->stomp->readFrame();
+        return $this->frameFactory->createFromClientFrame($this->stomp->readFrame());
+    }
+
+    /**
+     * Creates the default FrameFactory instance that creates Stomper frame instances
+     * from the client connection frame instance.
+     */
+    protected function createDefaultFrameFactory()
+    {
+        return new FrameFactory();
     }
 }
