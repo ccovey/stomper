@@ -3,6 +3,18 @@ Stomper
 
 [![Build Status](https://secure.travis-ci.org/jwage/stomper.png?branch=master)](http://travis-ci.org/jwage/stomper)
 
+PHP Stomp library that provides additional functionality on top of the default Stomp API. 
+
+## What is Stomp?
+
+**From [STOMP Protocol Specification, Version 1.1](http://stomp.github.io/stomp-specification-1.1.html):**
+
+"STOMP is a simple interoperable protocol designed for asynchronous message passing between clients via mediating servers. It defines a text based wire-format for messages passed between these clients and servers."
+
+## What is Stomper?
+
+Stomper is an object oriented library that can be used with the [Stomp PECL](http://pecl.php.net/package/stomp) extension or the [FuseSource Stomp](https://packagist.org/packages/fusesource/stomp-php) library. It provides some additional functionality and abstractions to make reading and writing messages with your PHP applications easier.
+
 ## Install
 
 Install Stomper with Composer:
@@ -63,6 +75,10 @@ $client->subscribeClosure('queue.name', function(MessageInterface $message, Clie
     // do something with the $message
 });
 ```
+
+## Resources
+
+- [STOMP Protocol Specification, Version 1.1](http://stomp.github.io/stomp-specification-1.1.html)
 
 ## Tests
 
