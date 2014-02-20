@@ -97,7 +97,7 @@ abstract class AbstractStompClient implements ClientInterface
 
         $client = $this;
 
-        return new Loop(function(Loop $loop) use ($closure, $client) {
+        $loop = $this->createLoop(function(Loop $loop) use ($closure, $client) {
             if (!$client->hasMessage()) {
                 return;
             }
@@ -106,6 +106,10 @@ abstract class AbstractStompClient implements ClientInterface
                 $closure($message, $client, $loop);
             }
         });
+
+        $loop->run();
+
+        return $loop;
     }
 
     /**
@@ -190,6 +194,11 @@ abstract class AbstractStompClient implements ClientInterface
     public function setReadTimeout($seconds, $microseconds = 0)
     {
         return $this->connection->setReadTimeout($seconds, $microseconds);
+    }
+
+    protected function createLoop(Closure $closure)
+    {
+        return new Loop($closure);
     }
 
     protected function jsonEncode($data)

@@ -89,14 +89,17 @@ class AbstractStompClientTest extends PHPUnit_Framework_TestCase
 
         $test = $this;
 
-        $loop = $this->client->subscribeClosure('queue.name', function(Message $message, TestStompClient $client, Loop $loop) use ($test, $parameters, $headers) {
+        $called = false;
+
+        $this->client->subscribeClosure('queue.name', function(Message $message, TestStompClient $client, Loop $loop) use ($test, $parameters, $headers, &$called) {
             $loop->stop();
             $test->assertNull($message->getQueueName());
             $test->assertEquals($parameters, $message->getParameters());
             $test->assertEquals($headers, $message->getHeaders());
+            $called = true;
         }, $headers);
 
-        $loop->run();
+        $this->assertTrue($called);
     }
 
     public function testSubscribe()
