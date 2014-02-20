@@ -1,6 +1,6 @@
 {
     "name": "jwage/stomper",
-    "description": "PHP Stomp Library",
+    "description": "PHP Stomp library that provides additional functionality on top of the default Stomp API.",
     "keywords": ["stomp", "hornetq", "rabbitmq"],
     "license": "MIT",
     "type": "project",
