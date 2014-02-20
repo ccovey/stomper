@@ -13,7 +13,6 @@ class StompConnectionTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->stomp = $this->getMockBuilder('Stomp')
-            ->disableOriginalConstructor()
             ->setMethods(array('connect', 'hasFrame'))
             ->getMock();
 
