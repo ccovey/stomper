@@ -55,3 +55,13 @@ Or for your convenience you can use the `subscribeClosure()` method:
 
         // do something with the $message
     });
+
+## Tests
+
+Run the test suite using PHPUnit:
+
+    $ phpunit
+
+## License
+
+MIT, see LICENSE.
