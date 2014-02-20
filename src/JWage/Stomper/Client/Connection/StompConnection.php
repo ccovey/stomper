@@ -2,6 +2,7 @@
 
 namespace JWage\Stomper\Client\Connection;
 
+use JWage\Stomper\Client\Connection\Frame\FrameFactory;
 use Stomp as BaseStomp;
 
 class StompConnection extends AbstractConnection
@@ -12,12 +13,12 @@ class StompConnection extends AbstractConnection
      * @param \Stomp $stomp
      * @param string $username
      * @param string $password
+     * @param FrameFactory $frameFactory
      */
-    public function __construct(BaseStomp $stomp, $username, $password)
+    public function __construct(BaseStomp $stomp, $username, $password, FrameFactory $frameFactory = null)
     {
+        parent::__construct($username, $password, $frameFactory);
         $this->stomp = $stomp;
-        $this->username = $username;
-        $this->password = $password;
     }
 
     /**

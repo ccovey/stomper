@@ -4,12 +4,14 @@ namespace JWage\Stomper\Tests\Client;
 
 use FuseSource\Stomp\Stomp;
 use JWage\Stomper\Client\Connection\AbstractConnection;
+use JWage\Stomper\Client\Connection\Frame\FrameFactory;
 use JWage\Stomper\Message\Message;
 use PHPUnit_Framework_TestCase;
 
 class AbstractConnectionTest extends PHPUnit_Framework_TestCase
 {
     private $stomp;
+    private $frameFactory;
     private $connection;
 
     protected function setUp()
@@ -18,7 +20,11 @@ class AbstractConnectionTest extends PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->connection = new ConnectionTest($this->stomp, 'guest', 'guest');
+        $this->frameFactory = $this->getMockBuilder('JWage\Stomper\Client\Connection\Frame\FrameFactory')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->connection = new ConnectionTest($this->stomp, 'guest', 'guest', $this->frameFactory);
     }
 
     public function testConnect()
@@ -148,13 +154,27 @@ class AbstractConnectionTest extends PHPUnit_Framework_TestCase
 
     public function testReadFrame()
     {
+        $clientFrame = $this->getMockBuilder('FuseSource\Stomp\Frame')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $stomperFrame = $this->getMockBuilder('JWage\Stomper\Client\Connection\Frame\FrameInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->stomp->expects($this->once())
             ->method('connect');
 
-        $this->stomp->expects($this->once())
-            ->method('readFrame');
+        $this->frameFactory->expects($this->once())
+            ->method('createFromClientFrame')
+            ->with($clientFrame)
+            ->will($this->returnValue($stomperFrame));
 
-        $this->connection->readFrame();
+        $this->stomp->expects($this->once())
+            ->method('readFrame')
+            ->will($this->returnValue($clientFrame));
+
+        $this->assertSame($stomperFrame, $this->connection->readFrame());
     }
 
     public function testHasFrame()
@@ -172,11 +192,10 @@ class AbstractConnectionTest extends PHPUnit_Framework_TestCase
 
 class ConnectionTest extends AbstractConnection
 {
-    public function __construct(Stomp $stomp, $username, $password)
+    public function __construct(Stomp $stomp, $username, $password, FrameFactory $frameFactory = null)
     {
+        parent::__construct($username, $password, $frameFactory);
         $this->stomp = $stomp;
-        $this->username = $username;
-        $this->password = $password;
     }
 
     public function hasFrame()

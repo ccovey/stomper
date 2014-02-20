@@ -41,6 +41,46 @@ abstract class AbstractStompClient implements ClientInterface
     }
 
     /**
+     * Checks whether or not we have connected to stomp.
+     *
+     * @return boolean
+     */
+    public function isConnected()
+    {
+        return $this->connection->isConnected();
+    }
+
+    /**
+     * Connects with stomp.
+     *
+     * @return boolean
+     */
+    public function connect()
+    {
+        return $this->connection->connect();
+    }
+
+    /**
+     * Disconnects from stomp.
+     *
+     * @return boolean
+     */
+    public function disconnect()
+    {
+        return $this->connection->disconnect();
+    }
+
+    /**
+     * Gets the current stomp connection session id.
+     *
+     * @return string
+     */
+    public function getSessionId()
+    {
+        return $this->connection->getSessionId();
+    }
+
+    /**
      * Sends a Message instance.
      *
      * @param MessageInterface $message
