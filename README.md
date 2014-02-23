@@ -3,6 +3,7 @@ Stomper
 
 [![Build Status](https://secure.travis-ci.org/jwage/stomper.png?branch=master)](http://travis-ci.org/jwage/stomper)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/jwage/stomper/badges/quality-score.png?s=93985b6c21ad0bf9b94ec09ad7aac69f08ee52d7)](https://scrutinizer-ci.com/g/jwage/stomper/)
+[![Code Coverage](https://scrutinizer-ci.com/g/jwage/stomper/badges/coverage.png?s=719548d3afcd89328864f55d45c5d87920874654)](https://scrutinizer-ci.com/g/jwage/stomper/)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/81a3d9bc-9a58-442e-9865-8daef94c87c4/mini.png)](https://insight.sensiolabs.com/projects/81a3d9bc-9a58-442e-9865-8daef94c87c4)
 [![Latest Stable Version](https://poser.pugx.org/jwage/stomper/v/stable.png)](https://packagist.org/packages/jwage/stomper)
 [![Total Downloads](https://poser.pugx.org/jwage/stomper/downloads.png)](https://packagist.org/packages/jwage/stomper)
