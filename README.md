@@ -2,6 +2,7 @@ Stomper
 =======
 
 [![Build Status](https://secure.travis-ci.org/jwage/stomper.png?branch=master)](http://travis-ci.org/jwage/stomper)
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/jwage/stomper/badges/quality-score.png?s=93985b6c21ad0bf9b94ec09ad7aac69f08ee52d7)](https://scrutinizer-ci.com/g/jwage/stomper/)
 
 PHP Stomp library that provides additional functionality on top of the default Stomp API. 
 
