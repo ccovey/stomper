@@ -5,7 +5,7 @@ namespace JWage\Stomper\Message;
 class Message implements MessageInterface
 {
     /**
-     * @var StompFrame|FuseSource\Stomp\Frame
+     * @var StompFrame|FuseSource\Stomp\StompFrame
      */
     protected $frame;
 

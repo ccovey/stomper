@@ -4,6 +4,7 @@ namespace JWage\Stomper\Client;
 
 use Closure;
 use JWage\Stomper\Client\Connection\ConnectionInterface;
+use JWage\Stomper\Client\Connection\Frame\FrameInterface;
 use JWage\Stomper\Exception;
 use JWage\Stomper\Loop\Loop;
 use JWage\Stomper\Message\Message;
@@ -97,13 +98,13 @@ abstract class AbstractStompClient implements ClientInterface
     /**
      * Reads a Message instance when it exists.
      *
-     * @return MessageInterface $message
+     * @return MessageInterface|null $message
      */
     public function readMessage()
     {
         $frame = $this->connection->readFrame();
 
-        if ($frame) {
+        if ($frame instanceof FrameInterface) {
             $message = $this->messageFactory->createMessage(
                 null, $this->jsonDecode($frame->body), $frame->headers
             );

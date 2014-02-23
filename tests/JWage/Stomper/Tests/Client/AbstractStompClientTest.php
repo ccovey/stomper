@@ -4,6 +4,7 @@ namespace JWage\Stomper\Tests\Client;
 
 use FuseSource\Stomp\Frame;
 use JWage\Stomper\Client\AbstractStompClient;
+use JWage\Stomper\Client\Connection\Frame\FuseStompFrame;
 use JWage\Stomper\Loop\Loop;
 use JWage\Stomper\Message\Message;
 use PHPUnit_Framework_TestCase;
@@ -82,7 +83,8 @@ class AbstractStompClientTest extends PHPUnit_Framework_TestCase
         $parameters = array('parameter' => 'value');
         $headers = array('header' => 'value');
 
-        $frame = new Frame('TEST', $headers, json_encode($parameters));
+        $clientFrame = new Frame('TEST', $headers, json_encode($parameters));
+        $frame = new FuseStompFrame($clientFrame);
 
         $this->connection->expects($this->once())
             ->method('readFrame')
@@ -117,7 +119,8 @@ class AbstractStompClientTest extends PHPUnit_Framework_TestCase
             ->method('hasFrame')
             ->will($this->returnValue(true));
 
-        $frame = new Frame('TEST', $headers, json_encode($parameters));
+        $clientFrame = new Frame('TEST', $headers, json_encode($parameters));
+        $frame = new FuseStompFrame($clientFrame);
 
         $this->connection->expects($this->once())
             ->method('readFrame')
@@ -186,7 +189,11 @@ class AbstractStompClientTest extends PHPUnit_Framework_TestCase
     public function testAck()
     {
         $message = new Message();
-        $message->setFrame(new Frame());
+
+        $clientFrame = new Frame();
+        $frame = new FuseStompFrame($clientFrame);
+
+        $message->setFrame($frame);
 
         $this->connection->expects($this->once())
             ->method('ack')

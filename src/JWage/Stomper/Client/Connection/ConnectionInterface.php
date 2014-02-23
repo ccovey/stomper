@@ -98,7 +98,7 @@ interface ConnectionInterface
     /**
      * Acknowledges consumption of a message.
      *
-     * @param string|Frame $message
+     * @param string|\JWage\Stomper\Client\Connection\Frame\FrameInterface $message
      * @param string $transactionId
      *
      * @return boolean

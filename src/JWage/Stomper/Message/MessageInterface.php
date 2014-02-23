@@ -7,7 +7,7 @@ interface MessageInterface
     /**
      * Gets the raw Frame object for this message.
      *
-     * @return StompFrame|FuseSource\Stomp\Frame $frame
+     * @return \JWage\Stomper\Client\Connection\Frame\FrameInterface $frame
      */
     public function getFrame();
 
