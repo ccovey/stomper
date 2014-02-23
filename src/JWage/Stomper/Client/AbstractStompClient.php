@@ -106,7 +106,7 @@ abstract class AbstractStompClient implements ClientInterface
 
         if ($frame instanceof FrameInterface) {
             $message = $this->messageFactory->createMessage(
-                null, $this->jsonDecode($frame->body), $frame->headers
+                null, $this->jsonDecode($frame->getBody()), $frame->getHeaders()
             );
 
             $message->setFrame($frame);

@@ -48,4 +48,28 @@ abstract class AbstractFrame implements FrameInterface
     {
         return $this->frame;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getCommand()
+    {
+        return $this->command;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getHeaders()
+    {
+        return $this->headers;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getBody()
+    {
+        return $this->body;
+    }
 }

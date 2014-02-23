@@ -10,4 +10,19 @@ interface FrameInterface
      * @return \StompFrame|\FuseSource\Stomp\Frame
      */
     public function getWrappedFrame();
+
+    /**
+     * @return string
+     */
+    public function getCommand();
+
+    /**
+     * @return array
+     */
+    public function getHeaders();
+
+    /**
+     * @return string
+     */
+    public function getBody();
 }
