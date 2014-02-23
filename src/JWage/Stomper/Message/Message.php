@@ -2,10 +2,12 @@
 
 namespace JWage\Stomper\Message;
 
+use JWage\Stomper\Client\Connection\Frame\FrameInterface;
+
 class Message implements MessageInterface
 {
     /**
-     * @var StompFrame|FuseSource\Stomp\StompFrame
+     * @var \JWage\Stomper\Client\Connection\Frame\FrameInterface
      */
     protected $frame;
 
@@ -45,9 +47,9 @@ class Message implements MessageInterface
     /**
      * Sets the raw Frame object for this message.
      *
-     * @param StompFrame|FuseSource\Stomp\Frame $frame
+     * @param \JWage\Stomper\Client\Connection\Frame\FrameInterface $frame
      */
-    public function setFrame($frame)
+    public function setFrame(FrameInterface $frame)
     {
         $this->frame = $frame;
     }
@@ -55,7 +57,7 @@ class Message implements MessageInterface
     /**
      * Gets the raw Frame object for this message.
      *
-     * @return StompFrame|FuseSource\Stomp\Frame $frame
+     * @return \JWage\Stomper\Client\Connection\Frame\FrameInterface $frame
      */
     public function getFrame()
     {

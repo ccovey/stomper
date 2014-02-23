@@ -3,6 +3,7 @@
 namespace JWage\Stomper\Tests\Message;
 
 use FuseSource\Stomp\Frame;
+use JWage\Stomper\Client\Connection\Frame\FuseStompFrame;
 use JWage\Stomper\Message\Message;
 use PHPUnit_Framework_TestCase;
 
@@ -22,7 +23,7 @@ class MessageTest extends PHPUnit_Framework_TestCase
 
         $this->assertNull($message->getFrame());
 
-        $frame = new Frame();
+        $frame = new FuseStompFrame(new Frame());
         $message->setFrame($frame);
 
         $this->assertSame($frame, $message->getFrame());
