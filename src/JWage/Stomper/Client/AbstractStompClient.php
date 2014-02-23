@@ -247,7 +247,7 @@ abstract class AbstractStompClient implements ClientInterface
         $jsonEncoded = @json_encode($data);
 
         if ($jsonEncoded === false) {
-            throw Exception::jsonEncodeFailureException($data);
+            throw Exception::jsonEncodeFailureException();
         }
 
         return $jsonEncoded;

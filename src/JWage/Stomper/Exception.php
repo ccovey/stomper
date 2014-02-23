@@ -9,10 +9,9 @@ class Exception extends BaseException
     /**
      * Create json encode failure exception.
      *
-     * @param array $data
      * @return self
      */
-    public static function jsonEncodeFailureException(array $data)
+    public static function jsonEncodeFailureException()
     {
         switch (json_last_error()) {
             case JSON_ERROR_NONE:
