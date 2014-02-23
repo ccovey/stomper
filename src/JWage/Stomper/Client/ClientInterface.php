@@ -39,6 +39,7 @@ interface ClientInterface
      * Sends a Message instance.
      *
      * @param MessageInterface $message
+     * @return void
      */
     function send(MessageInterface $message);
 
@@ -62,6 +63,7 @@ interface ClientInterface
      *
      * @param string $queueName
      * @param Closure $closure
+     * @return \JWage\Stomper\Loop\Loop
      */
     function subscribeClosure($queueName, Closure $closure);
 

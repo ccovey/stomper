@@ -2,7 +2,6 @@
 
 namespace JWage\Stomper\Client\Connection;
 
-use FuseSource\Stomp\Stomp as BaseStomp;
 use JWage\Stomper\Client\Connection\Frame\FrameFactory;
 
 abstract class AbstractConnection implements ConnectionInterface

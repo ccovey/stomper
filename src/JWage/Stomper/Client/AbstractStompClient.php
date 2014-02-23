@@ -98,7 +98,7 @@ abstract class AbstractStompClient implements ClientInterface
     /**
      * Reads a Message instance when it exists.
      *
-     * @return MessageInterface|null $message
+     * @return Message|null $message
      */
     public function readMessage()
     {
@@ -242,6 +242,9 @@ abstract class AbstractStompClient implements ClientInterface
         return new Loop($closure);
     }
 
+    /**
+     * @return string
+     */
     protected function jsonEncode($data)
     {
         $jsonEncoded = @json_encode($data);
@@ -253,6 +256,9 @@ abstract class AbstractStompClient implements ClientInterface
         return $jsonEncoded;
     }
 
+    /**
+     * @param string $json
+     */
     protected function jsonDecode($json)
     {
         return json_decode($json, true);
