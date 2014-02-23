@@ -27,9 +27,6 @@ abstract class AbstractFrame implements FrameInterface
     /**
      * Constructs a new Frame instance.
      *
-     * @param string $command
-     * @param array $headers
-     * @param string $body
      */
     public function __construct ($frame)
     {

@@ -3,11 +3,8 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use FuseSource\Stomp\Stomp;
-use JWage\Stomper\Client\ClientInterface;
 use JWage\Stomper\Client\Connection\FuseStompConnection;
 use JWage\Stomper\Client\FuseStompClient;
-use JWage\Stomper\Loop\Loop;
-use JWage\Stomper\Message\Message;
 use JWage\Stomper\Message\MessageFactory;
 
 $config = require __DIR__ . '/config/config.php';
