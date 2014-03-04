@@ -32,17 +32,29 @@ abstract class AbstractConnection implements ConnectionInterface
     protected $connected = false;
 
     /**
+     * @var int
+     */
+    protected $reconnectTimeout;
+
+    /**
+     * @var int
+     */
+    protected $connectionTime;
+
+    /**
      * Constructs a connection instance.
      *
      * @param string $username
      * @param string $password
      * @param FrameFactory $frameFactory
      */
-    public function __construct($username, $password, FrameFactory $frameFactory = null)
+    public function __construct($username, $password, FrameFactory $frameFactory = null, $reconnectTimeout = null)
     {
         $this->username = $username;
         $this->password = $password;
         $this->frameFactory = $frameFactory ?: $this->createDefaultFrameFactory();
+        $this->reconnectTimeout = $reconnectTimeout;
+        $this->connectionTime = time();
     }
 
     /**
@@ -79,6 +91,10 @@ abstract class AbstractConnection implements ConnectionInterface
      */
     public function connect()
     {
+        if ($this->reconnectTimeout > 0) {
+            $this->checkTimeout();
+        }
+
         if ($this->connected === false) {
             $result = $this->stomp->connect($this->username, $this->password);
 
@@ -235,5 +251,17 @@ abstract class AbstractConnection implements ConnectionInterface
     protected function createDefaultFrameFactory()
     {
         return new FrameFactory();
+    }
+
+    /**
+     * Check connection time against current time to determine if we should reconnect.
+     */
+    protected function checkTimeout()
+    {
+        $timestamp = time();
+        if (($timestamp - $this->connectionTime) > $this->reconnectTimeout) {
+            $this->disconnect();
+            $this->connectionTime = $timestamp;
+        }
     }
 }
