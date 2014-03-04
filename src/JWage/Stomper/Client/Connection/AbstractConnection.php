@@ -99,6 +99,7 @@ abstract class AbstractConnection implements ConnectionInterface
             $result = $this->stomp->connect($this->username, $this->password);
 
             $this->connected = true;
+            $this->connectionTime = time();
 
             return $result;
         }
@@ -261,7 +262,6 @@ abstract class AbstractConnection implements ConnectionInterface
         $timestamp = time();
         if (($timestamp - $this->connectionTime) > $this->reconnectTimeout) {
             $this->disconnect();
-            $this->connectionTime = $timestamp;
         }
     }
 }
