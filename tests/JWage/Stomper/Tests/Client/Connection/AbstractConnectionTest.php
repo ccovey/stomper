@@ -188,14 +188,68 @@ class AbstractConnectionTest extends PHPUnit_Framework_TestCase
 
        $this->assertTrue($this->connection->hasFrame());
     }
+
+    public function testTimeoutExceeded()
+    {
+        $connection  = new ConnectionTimeoutTest($this->stomp, 'guest', 'guest', $this->frameFactory, 29);
+
+        $this->stomp->expects($this->once())
+            ->method('connect');
+
+        $this->stomp->expects($this->once())
+            ->method('send');
+
+        $this->stomp->expects($this->once())
+            ->method('disconnect');
+
+        $connection->send('queue.name', 'the message', array('header' => 'value'));
+        $this->assertEquals($connection->connectionTime, time());
+    }
+
+    public function testTimeoutNotChangedWhenNoTimeoutGiven()
+    {
+        $this->stomp->expects($this->once())
+            ->method('connect');
+
+        $this->stomp->expects($this->once())
+            ->method('send');
+
+        $this->stomp->expects($this->never())
+            ->method('disconnect');
+
+        $this->connection->send('queue.name', 'the message', array('header' => 'value'));
+
+        $this->assertEquals($this->connection->connectionTime, time());
+    }
 }
 
 class ConnectionTest extends AbstractConnection
 {
+    public $connectionTime;
+
     public function __construct(Stomp $stomp, $username, $password, FrameFactory $frameFactory = null)
     {
         parent::__construct($username, $password, $frameFactory);
         $this->stomp = $stomp;
+        $this->connectionTime = strtotime('-30 seconds');
+    }
+
+    public function hasFrame()
+    {
+        $this->connect();
+        return $this->stomp->hasFrameToRead();
+    }
+}
+
+class ConnectionTimeoutTest extends AbstractConnection
+{
+    public $connectionTime;
+
+    public function __construct(Stomp $stomp, $username, $password, FrameFactory $frameFactory = null, $reconnectTimeout)
+    {
+        parent::__construct($username, $password, $frameFactory, $reconnectTimeout);
+        $this->stomp = $stomp;
+        $this->connectionTime = strtotime('-30 SECONDS');
     }
 
     public function hasFrame()
