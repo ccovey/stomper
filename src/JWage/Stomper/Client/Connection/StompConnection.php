@@ -15,9 +15,9 @@ class StompConnection extends AbstractConnection
      * @param string $password
      * @param FrameFactory $frameFactory
      */
-    public function __construct(BaseStomp $stomp, $username, $password, FrameFactory $frameFactory = null)
+    public function __construct(BaseStomp $stomp, $username, $password, FrameFactory $frameFactory = null, $reconnectTimeout = null)
     {
-        parent::__construct($username, $password, $frameFactory);
+        parent::__construct($username, $password, $frameFactory, $reconnectTimeout);
         $this->stomp = $stomp;
     }
 
